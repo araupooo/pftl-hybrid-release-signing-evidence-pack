@@ -1,0 +1,36 @@
+=== ENVIRONMENT PROBE ===
+date_utc: 2026-11-20 14:09:41 UTC
+hostname: htch-runtime
+os: Linux 7.0.0-44-generic x86_64 GNU/Linux / Ubuntu 24.04.5 LTS
+cpu_model: AMD EPYC 9D25 126-Core Processor
+cpu_count: 4
+mem_total_kb: 8124900
+disk_free_root: 7.4G
+python3: Python 3.12.3
+git: git version 2.43.0
+curl: curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.5.9 zlib/1.3 brotli/1.1.0 zstd/1.5.5 libidn2/2.3.7 libpsl/0.21.2 (+libidn2/2.3.7) libssh/0.10.6/openssl/zlib nghttp2/1.59.0 librtmp/2.3 OpenLDAP/2.6.10
+cmake: cmake version 3.28.3
+gcc: gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+system openssl: OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.5.9 29 Sep 2026)
+pack openssl: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+pack openssl providers:
+  Providers:
+    default
+      name: OpenSSL Default Provider
+      version: 3.5.9
+      status: active
+pack openssl ML-DSA/SLH-DSA/ML-KEM algorithms present:
+  ML-DSA-44
+  ML-DSA-65
+  ML-DSA-87
+  ML-KEM-1024
+  ML-KEM-512
+  ML-KEM-768
+  SLH-DSA-SHAKE-128f
+  SLH-DSA-SHAKE-128s
+  SLH-DSA-SHAKE-192f
+  SLH-DSA-SHAKE-192s
+  SLH-DSA-SHAKE-256f
+  SLH-DSA-SHAKE-256s
+postfiatd HEAD: 0085a1ff885d6a446369cf73a4430f75af22be55 (2026-10-10 18:53:26 +0200 Merge pull request #50 from postfiatorg/hotfix/upstream-hardening-1.0.9)
+=== end of env_probe.sh ===

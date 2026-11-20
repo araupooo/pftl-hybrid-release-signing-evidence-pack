@@ -1,0 +1,66 @@
+=== REJECTED DOWNGRADE SIMULATION ===
+date_utc: 2026-11-20 14:15:54 UTC
+openssl: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+installed counter (simulated deployed release): 42
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+--- case A: control: valid manifest, counter 42, both signatures present (expected: ACCEPT) ---
+VERDICT: ACCEPT
+case A: PASS (got ACCEPT)
+
+manifest written: version=0.9.0 counter=41
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+--- case B: stale manifest: counter 41 < installed 42, signatures valid (expected: REJECT) ---
+VERDICT: REJECT (rollback: stale manifest)
+case B: PASS (got REJECT)
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+removed ml-dsa-65 signature from signatures.json
+--- case C: missing ML-DSA-65 signature (classical-only manifest) (expected: REJECT) ---
+VERDICT: REJECT (missing signature or manifest hash mismatch)
+case C: PASS (got REJECT)
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+removed ed25519 signature from signatures.json
+--- case D: missing Ed25519 signature (PQ-only manifest) (expected: REJECT) ---
+VERDICT: REJECT (missing signature or manifest hash mismatch)
+case D: PASS (got REJECT)
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+appended TAMPERED bytes to postfiatd-firmware-1.0.0.bin after signing
+--- case E: tampered artifact: digest mismatch, signatures valid (expected: REJECT) ---
+VERDICT: REJECT (artifact digest mismatch)
+case E: PASS (got REJECT)
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+swapped ed25519 and ml-dsa-65 signature fields
+--- case F: swapped signatures (ML-DSA sig in Ed25519 field) (expected: REJECT) ---
+VERDICT: REJECT (Ed25519 signature invalid)
+case F: PASS (got REJECT)
+
+=== DOWNGRADE SIMULATION SUMMARY ===
+passed: 6 / 6, failed: 0 / 6
+DOWNGRADE SIMULATION RESULT: PASS (all 6 cases produced their expected verdict)

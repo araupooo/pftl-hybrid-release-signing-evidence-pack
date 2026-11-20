@@ -1,0 +1,38 @@
+=== KEY-COMPROMISE AND RECOVERY DRILL ===
+date_utc: 2026-11-20 14:15:56 UTC
+openssl: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+
+--- step 1: sign release v1.0.0 (counter 42) with key set A ---
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+VERDICT: ACCEPT
+step 1: PASS (v1.0.0 accepted before compromise)
+
+--- step 2: declare compromise of key set A; publish revocation record ---
+revocation record written: revocation-set-A.json
+  revoked ed25519 fp: 3054c873b1a496265d5f1af70cc453cdda76362c6629ce616fc08afb7d0e2538
+  revoked ml-dsa-65 fp: a88b9d3543187cb2667771bec806a6add8f0e720c06ee042860d1e2858ea2bd6
+step 2: PASS (revocation record published)
+
+--- step 3: generate key set B; re-sign release v1.0.1 (counter 43) ---
+manifest written: version=1.0.1 counter=43
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+step 3: PASS (v1.0.1 signed with set B)
+
+--- step 4: verify v1.0.0 manifest under revocation (expect REJECT) ---
+revocation check: v1.0.0 signer fingerprints ARE in the revocation record -> REJECT
+step 4: PASS (compromised v1.0.0 manifest rejected via revocation record)
+
+--- step 5: verify v1.0.1 with set B (expect ACCEPT); v1.0.0 sigs must NOT verify under set B ---
+VERDICT: ACCEPT
+step 5: PASS (v1.0.1 accepted with set B; old signatures do not verify under new keys)
+
+=== KEY-COMPROMISE DRILL SUMMARY ===
+passed: 5 / 5, failed: 0 / 5
+COMPROMISE DRILL RESULT: PASS (all 5 steps behaved as expected)

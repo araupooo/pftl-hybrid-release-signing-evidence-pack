@@ -1,0 +1,71 @@
+=== HYBRID MANIFEST SIGNING DEMO ===
+date_utc: 2026-11-20 14:15:53 UTC
+openssl: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+scheme: dual independent signatures — Ed25519 (classical) + ML-DSA-65 (FIPS 204); both must verify (fail-closed)
+
+manifest written: version=1.0.0 counter=42
+  postfiatd-1.0.0-linux-amd64: size=1053 sha256=f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918
+  postfiatd-firmware-1.0.0.bin: size=1055 sha256=2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea
+  RELEASE-NOTES-1.0.0.txt: size=138 sha256=7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c
+signatures written: ed25519=64 B, ml-dsa-65=3309 B, hybrid total=3373 B
+
+--- manifest.json ---
+{
+  "artifacts": [
+    {
+      "name": "postfiatd-1.0.0-linux-amd64",
+      "sha256": "f0e4d11202270e4407f2f836006d8903008bd1aa3ecd033e9f3ed25fd5c09918",
+      "size": 1053
+    },
+    {
+      "name": "postfiatd-firmware-1.0.0.bin",
+      "sha256": "2c4249218d678a784d3023632686d5aa51d156ad040e1e8ac602aebc27af48ea",
+      "size": 1055
+    },
+    {
+      "name": "RELEASE-NOTES-1.0.0.txt",
+      "sha256": "7f13fb06d587d39076dbbf7d1bdca02f986b7f41716dba4a13c6186ebfeb305c",
+      "size": 138
+    }
+  ],
+  "hybrid": {
+    "ed25519_oid": "1.3.101.112",
+    "mldsa65_oid": "2.16.840.1.101.3.4.3.18",
+    "scheme": "dual independent signatures (Ed25519 + ML-DSA-65); both must verify"
+  },
+  "issued_utc": "2026-11-20T14:15:54Z",
+  "monotonic_counter": 42,
+  "release": "postfiatd",
+  "signer": {
+    "ed25519_pubkey_sha256": "7007f6f87e9d9bfc4598e0a778a0d5c503a315a5ea43cb1ac325ca23bf6d9fe5",
+    "mldsa65_pubkey_sha256": "727a9022074790d6fb8df71bc166d56a07963e14ebd6de80f7882f77fdea9a43"
+  },
+  "version": "1.0.0"
+}
+--- signatures.json (base64 truncated to 64 chars) ---
+manifest_sha256: 02725fb39cf0c27f46b9030bd88530577dc9355ae684479b7060b1a9e840407c
+ed25519:  sYNtc0nve3Ux/FjHKeBNOdOdhNht4UJHfxA+b5y0gXt20DyUgDRAZcNccqZ7IrlE... (len 88 b64 chars)
+ml-dsa-65: TrUXCNrtnK8bAhhFfScOuq7VQRw2XqV5C4JaNYokT8cSRXe1CriAqcTCxhrDH89t... (len 4412 b64 chars)
+
+--- verification (installed counter 42, i.e. this is the current release) ---
+--- verify_manifest.sh: dir=/home/hatch/workspace/goals/postfiat-task-node-connection/hidden_files/task-aee03c41/work/dual_sign installed_counter=42 ---
+check 1 manifest parses: OK (release=postfiatd version=1.0.0 counter=42)
+check 2 rollback: OK (manifest counter 42 >= installed 42)
+check 3 digest postfiatd-1.0.0-linux-amd64: OK (f0e4d11202270e44...)
+check 3 digest postfiatd-firmware-1.0.0.bin: OK (2c4249218d678a78...)
+check 3 digest RELEASE-NOTES-1.0.0.txt: OK (7f13fb06d587d390...)
+check 4 signer fingerprints: OK (both match trusted keys)
+check 5a signatures file: OK (both signatures present, manifest hash matches)
+check 5 Ed25519 signature: OK
+check 6 ML-DSA-65 signature: OK
+VERDICT: ACCEPT
+verify exit code: 0
+
+--- size accounting ---
+manifest.json bytes: 1013
+Ed25519 signature bytes: 64
+ML-DSA-65 signature bytes: 3309
+hybrid signature total bytes: 3373
+manifest + hybrid signatures bytes: 4386
+DEMO RESULT: PASS (valid hybrid manifest accepted)
+=== end of dual_sign_demo.sh ===

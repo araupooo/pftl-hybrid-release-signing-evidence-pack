@@ -1,0 +1,31 @@
+=== RFC 10073 COMPOSITE ML-DSA SUPPORT PROBE ===
+date_utc: 2026-11-20 14:15:57 UTC
+openssl: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+
+--- 1. composite algorithms in 'openssl list -public-key-algorithms' ---
+RESULT: no composite algorithms listed (expected on stock OpenSSL 3.5.9)
+
+--- 2. attempt genpkey with RFC 10073 composite names ---
+genpkey MLDSA65-Ed25519: FAILED as expected — Error initializing MLDSA65-Ed25519 context
+genpkey id-MLDSA65-Ed25519-SHA512: FAILED as expected — Error initializing id-MLDSA65-Ed25519-SHA512 context
+genpkey MLDSA44-Ed25519: FAILED as expected — Error initializing MLDSA44-Ed25519 context
+
+--- 3. oqsprovider presence ---
+RESULT: no oqsprovider in /home/hatch/workspace/goals/postfiat-task-node-connection/hidden_files/task-aee03c41/work/openssl-3.5.9-install/lib64/ossl-modules/ (only the default provider is installed)
+
+--- 4. RFC 10073 composite OIDs (reference, from the RFC — verified live 20 Nov 2026, section 8.2) ---
+id-MLDSA44-Ed25519-SHA512: 1.3.6.1.5.5.7.6.39
+id-MLDSA65-Ed25519-SHA512: 1.3.6.1.5.5.7.6.48
+NOTE: no id-MLDSA87-Ed25519-SHA512 is registered in RFC 10073 section 8.2;
+ML-DSA-87 pairs with Ed448 (arc 51), ECDSA-P384/P521, and RSA-3072/4096.
+(RFC 10073, Nov 2026, Standards Track; composite ML-DSA is EUF-CMA only, not SUF-CMA — RFC 10073 section 9.2)
+
+--- conclusion ---
+Composite ML-DSA is NOT runnable in stock OpenSSL 3.5.9 on this host.
+The dual independent-signature construction (Ed25519 + ML-DSA-65, both
+required) in scripts/dual_sign_demo.sh is the implementable-today shape.
+Composite remains the standards-tracked future; the only implementation
+verified by independent interop testing is Bouncy Castle 1.84 (cited in
+SOURCES.md; not executed here — no Java runtime in this environment).
+COMPOSITE PROBE RESULT: PASS (absence of composite support confirmed as documented)
+=== end of composite_probe.sh ===
