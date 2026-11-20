@@ -57,4 +57,20 @@ What happens:
 ## This run
 
 - Fresh-clone run log: `repro/fresh-clone-run.log`
-- (Filled in after the run: host, date, wall time, result.)
+- Clone: https://github.com/araupooo/pftl-hybrid-release-signing-evidence-pack.git
+  at commit `ff07534230c4d4b80619dd06007f8a9532655e17` (130 files).
+- Host: same 4-vCPU VM as the original run (see `outputs/env_probe.log`
+  in the clone for the fresh machine fingerprint; note the fresh clone
+  has no `src/postfiatd` checkout — that directory is local research
+  material, not part of the pack).
+- Date: 20 Nov 2026, 14:50:40–15:05:27 UTC (21:50–22:05 WIB); wall time
+  ~14.8 minutes including the OpenSSL 3.5.9 download, SHA-256 check,
+  and build.
+- Result: `run_all.sh` exit 0, "ALL CHECKS PASSED". Demo PASS, downgrade
+  simulation 6/6 PASS, compromise drill 5/5 PASS, composite probe PASS,
+  51 timing files. No manual repair was needed at any step.
+- Reproduction agreement with the shipped outputs: signature sizes
+  identical for all 17 algorithms; demo manifest 1,013 B and hybrid
+  signatures 3,373 B exactly; SLH-DSA-SHA2-128s sign median 533,667 us
+  (repro) vs 541,497 us (shipped), within 1.5%; ML-DSA-65 sign median
+  9,569 us vs 11,473 us (same order; both spawn-dominated).

@@ -1,0 +1,52 @@
+=== run_all.sh ===
+repo root: /home/hatch/workspace/goals/postfiat-task-node-connection/hidden_files/task-aee03c41/repro-clone
+date_utc: 2026-11-20 14:50:40 UTC
+
+system tools present: cmake gcc make python3 git curl
+
+Building OpenSSL 3.5.9 (this takes a few minutes)...
+openssl-3.5.9.tar.gz: OK
+OpenSSL 3.5.9 built: OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)
+
+### step: env_probe.sh -> outputs/env_probe.log
+### step env_probe.sh exit code: 0
+  SLH-DSA-SHAKE-256s
+postfiatd checkout: absent (src/postfiatd not present in this copy)
+=== end of env_probe.sh ===
+
+### step: bench_openssl.sh -> outputs/bench_openssl.log
+### step bench_openssl.sh exit code: 0
+SLH-DSA-SHAKE-256f     sign         238150.9     234600.5     248877.5          0      49856
+SLH-DSA-SHAKE-256f     verify        14852.0      14727.5      16170.4          0      49856
+=== end of bench_openssl.sh ===
+
+### step: dual_sign_demo.sh -> outputs/dual_sign_demo.log
+### step dual_sign_demo.sh exit code: 0
+manifest + hybrid signatures bytes: 4386
+DEMO RESULT: PASS (valid hybrid manifest accepted)
+=== end of dual_sign_demo.sh ===
+
+### step: downgrade_sim.sh -> outputs/downgrade_sim.log
+### step downgrade_sim.sh exit code: 0
+=== DOWNGRADE SIMULATION SUMMARY ===
+passed: 6 / 6, failed: 0 / 6
+DOWNGRADE SIMULATION RESULT: PASS (all 6 cases produced their expected verdict)
+
+### step: compromise_drill.sh -> outputs/compromise_drill.log
+### step compromise_drill.sh exit code: 0
+=== KEY-COMPROMISE DRILL SUMMARY ===
+passed: 5 / 5, failed: 0 / 5
+COMPROMISE DRILL RESULT: PASS (all 5 steps behaved as expected)
+
+### step: composite_probe.sh -> outputs/composite_probe.log
+### step composite_probe.sh exit code: 0
+SOURCES.md; not executed here — no Java runtime in this environment).
+COMPOSITE PROBE RESULT: PASS (absence of composite support confirmed as documented)
+=== end of composite_probe.sh ===
+
+### final checks
+timing files produced: 51 (expected 51: 17 algorithms x 3 ops)
+run_all.sh: ALL CHECKS PASSED
+=== end of run_all.sh ===
+REPRO RUN_ALL EXIT: 0
+2026-11-20 15:05:27 UTC end
