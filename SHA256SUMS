@@ -117,7 +117,8 @@ e3aa8b6a5628a3c8d8448b851e6c308b3f47d389c3226b298d2ed1de34b19d58  ./outputs/timi
 e2f0d41cb17c3f6207c717c07b7f92ca951ad7bbe2901d0af57de2110270c49e  ./outputs/timings_SLH-DSA-SHAKE-256s_keygen.txt
 775d643fa3c4f2b5a2a7c3113dec574d7daa7ec2e157f5b766e8748e8ca563f7  ./outputs/timings_SLH-DSA-SHAKE-256s_sign.txt
 b8531d6e73c9e59802a606f7e3484aeeba6523eb2457d7284af623432d33ac1f  ./outputs/timings_SLH-DSA-SHAKE-256s_verify.txt
-6372911d95bae532b2cc688b2ca7616a6ddc07aa2b8effbcbb68ee53f70692c9  ./repro/REPRODUCTION.md
+734a792857d6b1560e37206ac4509bb656f399728a29238e2451a17e4f4e65e1  ./repro/REPRODUCTION.md
+906e05ecde944bba0b7b1773b5055151c39c0c5b2bf763f02ce5097812db9549  ./repro/fresh-clone-run.log
 7d078b000863dbd4bfde78890ba072cc2ca1870249377979bc455b81bf6668a6  ./scripts/bench_openssl.sh
 0cedf7268ef24dc401df3be4deac2e5bcd27f3f19fcf9755adf02fc6a2a68b09  ./scripts/composite_probe.sh
 a4b1221e4589d7fffd7d2b1982474a2f8675ff26b0efad4cd91ce67311cc3569  ./scripts/compromise_drill.sh
